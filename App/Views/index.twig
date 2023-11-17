@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Currencies</title>
+    <link rel="stylesheet" href="css/output.css">
+</head>
+<body class="bg-gray-100">
+<section class="bg-gray-500 w-full h-20 flex items-center justify-center">
+    <form method="get" action="/search" class="flex items-center">
+        <input type="text" name="currencyPair" placeholder="Search currency pairs..."
+               class="rounded-l-lg py-2 px-4 outline-none border-none text-gray-700 leading-tight focus:outline-none">
+        <input type="submit" value="Search"
+               class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-r-lg hover:bg-blue-700 focus:outline-none focus:bg-blue-700">
+    </form>
+</section>
+<section class="p-4">
+    <div class="w-max mx-auto">
+        <form id="currencyForm" method="get" action="" class="mb-4">
+            <select id="currencySelect" name="baseCurrency" onchange="submitForm()"
+                    class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <option hidden>{{ baseCurrency }}</option>
+                <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+                <option value="BTC">BTC</option>
+            </select>
+            <noscript><input type="submit" value="Submit" class="hidden"></noscript>
+        </form>
+    </div>
+    {% for currency in currencies %}
+        <div class="border rounded-md p-4 mb-4 flex">
+            <div class="w-1/2 pr-4">
+                <div>
+                    <h1 class="text-lg font-semibold">{{ currency['name'] }}</h1>
+                    <p class="text-sm text-gray-500">{{ currency['id'] }}</p>
+                </div>
+            </div>
+            <div class="w-1/2 pl-4">
+                <div>
+                    <p class="text-lg font-semibold"><span class="text-sm font-medium text-gray-500">{{ baseCurrency }}</span> {{ currency['rate'] }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</section>
+<script>
+    function submitForm() {
+        document.getElementById('currencyForm').submit();
+    }
+</script>
+</body>
+</html>
