@@ -18,10 +18,16 @@ class CurrencyController
 
     public function index(): Response
     {
+        /**
+         *  Place to define base currency if it is not provided
+         */
         $baseCurrency = $_GET['baseCurrency'] ?? 'EUR';
 
         $allCurrencies = $this->api->getExchangeRates($baseCurrency);
 
+        /**
+         * Here is place to add or remove currencies in main page
+         */
         $currenciesToShow = ['BTC', 'ETH', 'XRP'];
 
         $currencies = [];
@@ -52,7 +58,9 @@ class CurrencyController
 
         $currencies = preg_split('/[\s,]+/', $currencyPairs);
 
-        if (count($currencies) < 2) {
+        //var_dump((int)$currencies[1]);die;
+
+        if (count($currencies) < 2 || (is_numeric($currencies[0]) || is_numeric($currencies[1]))) {
             return new Response('show', [
                 'error' => 'Please provide two currencies separated by space or comma'
             ]);
